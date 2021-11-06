@@ -16,35 +16,13 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("GameplayScene.fxml"));
 			Parent root = loader.load();
-			GameplaySceneController controller = loader.getController(); 
 			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
+			//Sobald in der Scene ein KeyInput reinkommt, wird der UIP aufgerufen.
+			scene.setOnKeyPressed(new UserInputHandler());
 			
-			//INPUT HANDLING by adding anon. EventHandler directly to scene
-			//TODO better architecture
-			scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-
-				@Override
-				public void handle(KeyEvent event) {
-					System.out.println(event.getCode());
-					switch(event.getCode()) {
-					case A: 
-						controller.pressA();
-						break;
-					case S: 
-						controller.pressS();
-						break;
-					case D: 
-						controller.pressD();
-						break;	
-					default:
-						break;
-					}
-				}
-				
-			});
 			
 			//Set Title
 			primaryStage.setTitle("PatternHero!");
