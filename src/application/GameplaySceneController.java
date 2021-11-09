@@ -1,7 +1,19 @@
 package application;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 public class GameplaySceneController {
+	
+	@FXML
+	 Button sBtn;
+	
+	@FXML
+	 Button aBtn;
+	
+	@FXML
+	 Button dBtn;
+	
 	
 	String input;
 	boolean songOver = false;
@@ -9,20 +21,23 @@ public class GameplaySceneController {
 	SoundGenerator sg = new SoundGenerator();
 		
 	public void pressA() {
-		System.out.println("A was pressed");
-		sg.playSound("6C",100);
+		sg.playSound("4C",100);
+//		aBtn.getStyleClass().add("pressed");
+
 		
 	}
 	
 	public void pressS() {
-		System.out.println("S was pressed");
-		sg.playSound("6D",100);
+		sg.playSound("4D",100);
+//		sBtn.getStyleClass().add("pressed");
+
 
 	}
 	
 	public void pressD() {
-		System.out.println("D was pressed");
-		sg.playSound("6E",100);
+		sg.playSound("4E",100);
+//		dBtn.getStyleClass().add("pressed");
+
 
 	}
 }
