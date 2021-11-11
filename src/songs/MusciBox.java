@@ -16,7 +16,7 @@ public class MusciBox {
 	Songs song = new Songs();
 	
 	void playSong(){
-		List<String> playThis = song.removeNull(song.maryHadA);
+		List<String> playThis = Songs.removeNull(song.maryHadA);
 		
 		for(String note : playThis ) {
 				sg.playSound(note, 130);

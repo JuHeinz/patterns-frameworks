@@ -11,7 +11,7 @@ public class Songs {
 	 */
 
 	//Mary had a little lamb
-	public String[][] maryHadA = {
+	public static String[][] maryHadA = {
 			{null, 		null, 		"4E", 		null, 		null},
 			{null, 		"4D", 		null, 		null, 		null},
 			{"4C", 		null, 		null, 		null, 		null},
@@ -47,7 +47,7 @@ public class Songs {
 	 * @return song with null values removed
 	 */
 	
-	public List<String> removeNull(String[][] song) {
+	public static List<String> removeNull(String[][] song) {
 		List<String> newSong = new ArrayList<>();
 		
 		for(String[] line : song ) {

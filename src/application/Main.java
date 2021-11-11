@@ -1,18 +1,23 @@
 package application;
 	
 
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import songs.Songs;
 
 public class Main extends Application {
 	@Override
+	
+	//TODO: In Threads aufteilen.
+	//THREAD 1:
+	//JAVAFX, 
+	
+	//THREAD 2:
+	// Model, Gameplay
+	
 	public void start(Stage primaryStage) {
 		try {
 			//JAVAFX STUFF
@@ -23,7 +28,6 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			//Set Title
 			primaryStage.setTitle("PatternHero!");
-			
 			//Set Icon
 			Image icon = new Image("icon.png");
 			primaryStage.getIcons().add(icon);
@@ -31,15 +35,11 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			
+			PatternHeroGame game = new PatternHeroGame();
+			game.run();
 			
 			//Sobald in der Scene ein KeyInput reinkommt, wird der UIP aufgerufen.
-			scene.setOnKeyPressed(new UserInputHandler());
-
-			
-			
-			
-			
+			scene.setOnKeyPressed(new UserInputHandler());			
 			
 		
 		} catch(Exception e) {
