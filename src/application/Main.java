@@ -1,18 +1,23 @@
 package application;
-	
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
+/**
+ * Start-Klasse.
+ * @author julia
+ *
+ */
 public class Main extends Application {
 	
-	static UserInputHandler uip = new UserInputHandler();
+
+	static UserInputHandler userInputHandler = new UserInputHandler();
 	
-	
+	/**
+	 * start() Method is inherited from JavaFX Application class
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -31,14 +36,10 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			
-			
+			//USER INPUT
 			//Sobald in der Scene ein KeyInput reinkommt, wird der UIP aufgerufen.
-			scene.setOnKeyPressed(uip);			
+			scene.setOnKeyPressed(userInputHandler);			
 
-			
-			
-		
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -47,12 +48,11 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
 		//GAME LOGIC THREAD
-		PatternHeroGame game = new PatternHeroGame(uip);
-
+		PatternHeroGame game = new PatternHeroGame(userInputHandler);
 		Thread gameLogicThread = new Thread(game);
 		gameLogicThread.start();
 		
-		//GRAPHICS THREAD
+		//GRAPHICS THREAD (JavaFX macht automatisch einen Thread)
 		launch(args);
 		
 	}

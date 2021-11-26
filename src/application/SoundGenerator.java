@@ -46,9 +46,6 @@ public class SoundGenerator {
 
 	}
 	
-	public void stopSound(String note){
-		
-	}
 
 	/**
 	 * Makes musical note and translates it to MIDI-Number

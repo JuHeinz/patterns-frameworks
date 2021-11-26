@@ -44,7 +44,7 @@ public class Songs {
 	/**
 	 * Transforms song as seen above in a way that removes all nulls
 	 * @param song that is to be transformed
-	 * @return song with null values removed
+	 * @return song with null values removed, as a List
 	 */
 	
 	public static List<String> removeNull(String[][] song) {

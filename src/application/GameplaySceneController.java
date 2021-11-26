@@ -1,12 +1,11 @@
 package application;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 /**
  * Handles incoming requests from the model zu change the view. 
  * @author julia
- *
+ *	BROKEN!!
  */
 public class GameplaySceneController {
 	/**
