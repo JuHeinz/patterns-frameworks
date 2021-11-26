@@ -35,7 +35,7 @@ public class SoundGenerator {
 			instrument.noteOn(noteTranslator(note), 80);
 
 			 //For this duration
-			Thread.sleep(700);
+			Thread.sleep(duration);
 
 			// Turn off the not & close the snyth
 			instrument.noteOff(noteTranslator(note), 80);

@@ -1,5 +1,4 @@
 package application;
-	
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,12 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class GraphicsTask extends Application implements Runnable{
+@Override
 	
-	static UserInputHandler uip = new UserInputHandler();
-	
-	
-	@Override
+
 	public void start(Stage primaryStage) {
 		try {
 			//JAVAFX STUFF
@@ -32,10 +29,9 @@ public class Main extends Application {
 			primaryStage.show();
 			
 			
-			
 			//Sobald in der Scene ein KeyInput reinkommt, wird der UIP aufgerufen.
-			scene.setOnKeyPressed(uip);			
-
+			scene.setOnKeyPressed(new UserInputHandler());			
+			
 			
 			
 		
@@ -43,17 +39,13 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		
-		//GAME LOGIC THREAD
-		PatternHeroGame game = new PatternHeroGame(uip);
 
-		Thread gameLogicThread = new Thread(game);
-		gameLogicThread.start();
-		
-		//GRAPHICS THREAD
-		launch(args);
-		
-	}
+@Override
+//RUN must be implemented cause this is a Runnable
+public void run() {
+	//Lauch must be implemented cause of JAVAFX
+	start(new Stage());
+	Application.launch();
+	
+}
 }

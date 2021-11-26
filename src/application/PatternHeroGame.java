@@ -8,42 +8,68 @@ import songs.Songs;
  * @author julia
  *
  */
-public class PatternHeroGame {
+public class PatternHeroGame implements Runnable{
 
 	boolean gameStatus = true;
 	NoteRainer noteRainer = new NoteRainer();
-
+	GameplaySceneController controller = new GameplaySceneController();
 	String[][] song;
+	UserInputHandler uip = null;
+	
+	//Constructor, inserts uip.
+	public PatternHeroGame(UserInputHandler uip) {
+		this.uip = uip;
+	}
+	
+	
+	
 	/**
 	 * runs the Game.
 	 */
-
 	public void run() {
 		song = Songs.maryHadA;
 
 		while (gameStatus) {
+			
 
 			for (int i = 0; i < song.length; i++) {
 
 				// WHAT NOTE SHOULD BE PRESSED RIGHT NOW?
 				String note = noteRainer.rainNote();
-				System.out.print("Frame " + i + " Note: " + note);
+				System.out.println(">>> " + i + "| Up Next: " + note);
+				
+				//GAME WAITS FOR INPUT
+				// In dieser Zeit fällt die Note vom Himmel herunter.
+				try {
+					Thread.sleep(4000);
+				} catch (InterruptedException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 								
 				
 				//DOES LAST INPUT MATCH THAT NOTE?
-				String userInput = UserInputHandler.lastInput; 
-				System.out.println(" Last user Input: " + userInput);
-				SoundGenerator sg = new SoundGenerator();
+				//Jetzt wird der letzte Input und die eingegebene Note abgeglichen.
+				String userInput  = null;
+				try {
+					userInput = uip.getLastInput();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				} 
 
 								
 				//If yes, play note
 				if(userInput == note) {
-					sg.playSound(note, 100);
+					System.out.println("!!!!!!!!!!!!!!!!!!CORRECT!!!!!!!!!!!!!!!!");
+					
+				}
+				else {
+					System.out.println("MISSED :(");
 				}
 
 				// Wait some time before next Loop can be made.
 				try {
-					Thread.sleep(600);
+					Thread.sleep(6000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

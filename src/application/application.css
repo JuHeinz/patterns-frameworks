@@ -4,3 +4,33 @@
 	-fx-background-color: #ffffff;
 	-fx-text-fill: #403e40;
 }
+
+.inputButtons{
+		-fx-text-fill: #ffffff;
+		-fx-background-radius: 0;
+		
+		
+}
+
+.btn1{
+	-fx-background-color: #743BBC
+}
+
+.btn2{
+	-fx-background-color: #167AD0
+}
+
+.btn3{
+	-fx-background-color: #32C54D
+}
+
+.btn4{
+	-fx-background-color: #F1732A
+}
+
+.btn5{
+	-fx-background-color: #E23C2E
+}
+
+
+/* Purple #743BBC  | Blue: #167AD0 * | Green: #32C54D | Yellow: #F7E657 | Oramge: #F1732A |  Red: #E23C2E  */

@@ -1,14 +1,9 @@
 package application;
 
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-/**
- * This class acts as a controler between the View (JavaFX) and the Model (GameplaySceneController)
- * It receives inputs from JAVAFX and triggers the code for the rest of the model
- */
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+
 /**
  * Is activated after a keyinput comes in. Reads the Keyinput and stores it (important for Gameplay Loop).
  *  * @see PatternHeroGame
@@ -24,11 +19,10 @@ public class UserInputHandler implements EventHandler<KeyEvent> {
 	SoundGenerator sg = new SoundGenerator();
 
 	
-	static String lastInput = "4E";
+	 String lastInput;
 	
 			@Override
 			public void handle(KeyEvent event) {
-				System.out.println(event.getCode());
 
 				switch (event.getCode()) {
 				case A:
@@ -47,10 +41,15 @@ public class UserInputHandler implements EventHandler<KeyEvent> {
 				default:
 					break;
 				}				
-			}
+				System.out.println("You played " + lastInput);
 
-		String getlastInput() {
-			return lastInput;
+			}
+			
+		String getLastInput() {
+			synchronized (this){
+				return lastInput;
+
+			}
 		}
 	
 	}
