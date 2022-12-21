@@ -5,6 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import music.PHSequencer;
+
 /**
  * Start-Klasse.
  * @author julia
@@ -22,7 +24,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			//JAVAFX STUFF
-			//Erstellt die JavaFX Scene
+			//Create JavaFX Scene
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("GameplayScene.fxml"));
 			Parent root = loader.load();
 			Scene scene = new Scene(root);
@@ -37,8 +39,8 @@ public class Main extends Application {
 			primaryStage.show();
 			
 			//USER INPUT
-			//Sobald in der Scene ein KeyInput reinkommt, wird der UIP aufgerufen.
-			scene.setOnKeyPressed(userInputHandler);			
+			//On key input on the scene, the
+			scene.setOnKeyPressed(userInputHandler);
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -51,8 +53,8 @@ public class Main extends Application {
 		PatternHeroGame game = new PatternHeroGame(userInputHandler);
 		Thread gameLogicThread = new Thread(game);
 		gameLogicThread.start();
-		
-		//GRAPHICS THREAD (JavaFX macht automatisch einen Thread)
+
+		//GRAPHICS THREAD (JavaFX creates a Thread automatically)
 		launch(args);
 		
 	}
