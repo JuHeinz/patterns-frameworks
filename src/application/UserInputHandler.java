@@ -11,52 +11,26 @@ import javafx.scene.input.KeyEvent;
  */
 public class UserInputHandler implements EventHandler<KeyEvent> {
     private String lastInput;
-    private String lastNote;
 
 
     @Override
     /**
-     * Reads last pressed key and stores it. Also stores corresponsing note.
+     * Reads last pressed key
      */
     public void handle(KeyEvent event) {
-
-            //TODO group similar notes in 4 classes, link them to the needed inputs
-        switch (event.getCode()) {
-            case A:
-                lastNote = "4C";
-
-                break;
-            case S:
-                lastNote = "4D";
-
-                break;
-            case D:
-                lastNote = "4E";
-                break;
-            default:
-                break;
-        }
         lastInput = event.getText();
-        System.out.println("You played " + lastInput);
-
+        System.out.println("You pressed " + lastInput);
     }
 
     //Getters and Setters
-    String getLastInput() {
+    public String getLastInput() {
         synchronized (this) {
             return lastInput;
 
         }
     }
 
-    String getLastNote() {
-        synchronized (this) {
-            return lastNote;
-        }
-    }
-
-
-    void setLastInput(String input) {
+    public void setLastInput(String input) {
         synchronized (this) {
             this.lastInput = input;
         }

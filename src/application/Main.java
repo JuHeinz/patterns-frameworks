@@ -39,7 +39,7 @@ public class Main extends Application {
 			primaryStage.show();
 			
 			//USER INPUT
-			//On key input on the scene, the
+			//On key input on the scene,
 			scene.setOnKeyPressed(userInputHandler);
 
 		} catch(Exception e) {

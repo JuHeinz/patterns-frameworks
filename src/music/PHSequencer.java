@@ -1,5 +1,6 @@
 package music;
 
+
 import javax.sound.midi.*;
 import java.io.*;
 
@@ -12,11 +13,6 @@ public class PHSequencer {
     File song;
 
     int BPM;
-    private int currentNote;
-
-    public int getCurrentNote() {
-        return currentNote;
-    }
 
     public PHSequencer(String song, int BPM) {
         //Set up sequencer by getting corresponding Javax classes and methods
@@ -26,7 +22,7 @@ public class PHSequencer {
             // A sequence stores one or more tracks. Tracks are made up of MidiEvents
             // Set the mode of the sequence. We divide each note in quarters (PPQ), with the resolution, we indicate that one tick is one quarter note long
             this.sequence = new Sequence(Sequence.PPQ, 1);
-            this.song = new File(song);
+            this.song = new File("midi_files/"+ song);
             this.BPM = BPM;
 
         } catch (MidiUnavailableException | InvalidMidiDataException e) {
@@ -34,6 +30,8 @@ public class PHSequencer {
         }
 
     }
+
+    PHReceiver receiver = new PHReceiver();
 
     public void startSequencer() {
         try {
@@ -62,23 +60,14 @@ public class PHSequencer {
             }
             //close sequencer
             sequencer.close();
+
+            System.out.println(receiver.getNoteOnAmount());
+
         } catch (MidiUnavailableException | InterruptedException | IOException | InvalidMidiDataException e) {
             throw new RuntimeException(e);
         }
     }
 
-    // A receiver listens on the sequence and does something every time a MidiEvent is processed/played
-    Receiver receiver = new Receiver() {
-        public void send(MidiMessage message, long timeStamp) {
-            //If the Status is NOTE_ON (144), output the note
-            if (message.getStatus() == 144) {
-                currentNote = message.getMessage()[1];
-            }
-        }
 
-        @Override
-        public void close() {
-            System.out.println("closed receiver");
-        }
-    };
+
 }
