@@ -2,6 +2,8 @@ package application;
 
 import music.PHSequencer;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * This is the game loop. Every play through of a song happens in this class.
  *
@@ -14,14 +16,17 @@ public class PatternHeroGame implements Runnable {
     private String song = settings.getSong();
     private int lives = settings.getLives();
 
+    AtomicReference<String> lastInput;
+
     UserInputHandler uih;
 
     String userInput = null;
     private int missedNotes = 0;
 
     // Constructor, inserts uip.
-    public PatternHeroGame(UserInputHandler uih) {
+    public PatternHeroGame(UserInputHandler uih, AtomicReference<String> lastInput) {
         this.uih = uih;
+        this.lastInput = lastInput;
     }
 
     /**
@@ -30,7 +35,7 @@ public class PatternHeroGame implements Runnable {
     public void run() {
 
         //Start sequencer, this plays the song
-        PHSequencer ph = new PHSequencer(song, settings.getBPM());
+        PHSequencer ph = new PHSequencer(song, settings.getBPM(), lastInput);
         ph.startSequencer();
         System.out.println("Song over");
 

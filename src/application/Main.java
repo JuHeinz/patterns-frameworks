@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import music.PHSequencer;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Start-Klasse.
@@ -15,8 +16,10 @@ import music.PHSequencer;
 public class Main extends Application {
 	
 
-	static UserInputHandler userInputHandler = new UserInputHandler();
-	
+	static AtomicReference<String> lastInput = new AtomicReference<>("");
+
+	static UserInputHandler userInputHandler = new UserInputHandler(lastInput);
+
 	/**
 	 * start() Method is inherited from JavaFX Application class
 	 */
@@ -50,7 +53,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
 		//GAME LOGIC THREAD
-		PatternHeroGame game = new PatternHeroGame(userInputHandler);
+		PatternHeroGame game = new PatternHeroGame(userInputHandler,lastInput);
 		Thread gameLogicThread = new Thread(game);
 		gameLogicThread.start();
 

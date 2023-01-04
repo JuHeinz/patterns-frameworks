@@ -4,19 +4,24 @@ package music;
 import javax.sound.midi.*;
 import java.io.*;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * Plays a song and outputs the notes in sync with playback
  */
 public class PHSequencer {
+    PHReceiver receiver;
     Sequencer sequencer;
     Sequence sequence;
     File song;
 
     int BPM;
 
-    public PHSequencer(String song, int BPM) {
+    public PHSequencer(String song, int BPM, AtomicReference<String> lastInput) {
         //Set up sequencer by getting corresponding Javax classes and methods
         try {
+            // The Receiver listens for midi events
+            this.receiver = new PHReceiver(lastInput);
             // The Sequencer is the class that plays the music
             this.sequencer = MidiSystem.getSequencer();
             // A sequence stores one or more tracks. Tracks are made up of MidiEvents
@@ -30,8 +35,6 @@ public class PHSequencer {
         }
 
     }
-
-    PHReceiver receiver = new PHReceiver();
 
     public void startSequencer() {
         try {
