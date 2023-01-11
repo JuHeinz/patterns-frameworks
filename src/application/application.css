@@ -1,36 +1,82 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
-.pressed{
-	-fx-background-color: #ffffff;
-	-fx-text-fill: #403e40;
+/*GENERAL*/
+.root{
+    -yellow: #F0E043;
+    -red: #F08A73;
+    -purple: #7F5AF0;
+    -turquoise:#4FF0B5;
+    -dark: #16161A;
 }
 
+.standard-text{
+    -fx-text-fill: #ffffff;
+    -fx-font-size: medium;
+}
+.dark-bg{
+	-fx-background-color: -dark;
+}
+
+.headline{
+    -fx-text-fill: -purple;
+    -fx-font-size: large;
+    -fx-font-weight: 900;
+}
+
+/* GAMEPLAY SCENE*/
+
+.note-block{
+	-fx-text-fill: white;
+		-fx-fill: -dark;
+		-fx-width: 1;
+}
+
+#paneA{
+    -fx-background-color: linear-gradient(to bottom, -yellow, -dark);
+}
+
+#paneS{
+    -fx-background-color: linear-gradient(to bottom, -red, -dark);
+}
+
+#paneD{
+    -fx-background-color: linear-gradient(to bottom, -purple, -dark);
+}
+
+#paneF{
+    -fx-background-color: linear-gradient(to bottom, -turquoise, -dark);
+}
 .inputButtons{
-		-fx-text-fill: #ffffff;
-		-fx-background-radius: 0;
-		
-		
+		-fx-text-fill: white;
+		-fx-font-size: large;
+		-fx-font-weight: 900;
+		-fx-background-color: -dark;
+		-fx-border-width: 10;
+		-fx-border-style: solid;
+		-fx-border-radius: 30;
 }
 
 .btn1{
-	-fx-background-color: #743BBC
+	-fx-border-color: -yellow;
 }
 
 .btn2{
-	-fx-background-color: #167AD0
+	-fx-border-color: -red;
 }
 
 .btn3{
-	-fx-background-color: #32C54D
+	-fx-border-color: -purple;
 }
 
 .btn4{
-	-fx-background-color: #F1732A
+	-fx-border-color: -turquoise;
 }
 
 .btn5{
 	-fx-background-color: #E23C2E
 }
 
+.column1{
+	-fx-background-color: -yellow;
 
-/* Purple #743BBC  | Blue: #167AD0 * | Green: #32C54D | Yellow: #F7E657 | Oramge: #F1732A |  Red: #E23C2E  */
+}

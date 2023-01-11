@@ -29,6 +29,7 @@ public class PHReceiver implements Receiver {
             noteOnAmount++;
             translateNoteToKey(currentNote);
             compareNoteToKey();
+
         }
     }
 
