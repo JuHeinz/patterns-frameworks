@@ -4,17 +4,21 @@ package music;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  *    Gets called every time a MidiEvent is processed/played.
  */
 public class PHReceiver implements Receiver {
 
+    private final AtomicReference<String> lastInput;
     private int currentNote;
     private int noteOnAmount;
     private String key;
 
-
-
+    public PHReceiver(AtomicReference<String> lastInput) {
+        this.lastInput = lastInput;
+    }
 
 
     /**
@@ -67,7 +71,7 @@ public class PHReceiver implements Receiver {
 
     public void compareNoteToKey(){
         //TODO Here the last played note and the last input key need to be compared but I don't know how
-        if(true){
+        if(lastInput.get() == key){
             System.out.println("CORRECT!");
         }else{
             System.out.println("FALSE!");
