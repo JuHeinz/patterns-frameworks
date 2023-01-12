@@ -5,7 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import music.PHSequencer;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -28,12 +27,17 @@ public class Main extends Application {
 		try {
 			//JAVAFX STUFF
 			//Create JavaFX Scene
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("GameplayScene.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("StartScene.fxml"));
 			Parent root = loader.load();
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+			//set CSS
+			String css = this.getClass().getResource(Settings.getTheme()).toExternalForm();
+			scene.getStylesheets().add(css);
+
 			//Set Title
 			primaryStage.setTitle("PatternHero!");
+
 			//Set Icon
 			Image icon = new Image("icon.png");
 			primaryStage.getIcons().add(icon);

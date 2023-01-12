@@ -10,8 +10,9 @@ public class Settings {
     private String song = "swallows.mid";
     private int lives = 100;
 
-    private int BPM = 70;
+    private int BPM = 20;
 
+    private static String theme = "pastel-theme.css";
 
 
 
@@ -39,4 +40,13 @@ public class Settings {
     public void setBPM(int BPM) {
         this.BPM = BPM;
     }
+
+    public static String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 }
+

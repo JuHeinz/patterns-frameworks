@@ -7,18 +7,28 @@
     -purple: #7F5AF0;
     -turquoise:#4FF0B5;
     -dark: #16161A;
+    -grey: #27272e;
+}
+
+.normal-button{
+    -fx-text-fill: white;
+	-fx-background-color: -grey;
+	-fx-border-color: -yellow;
+	-fx-border-radius: 20px;
+	-fx-background-radius: 20px;
 }
 
 .standard-text{
-    -fx-text-fill: #ffffff;
     -fx-font-size: medium;
+    -fx-fill: white;
 }
 .dark-bg{
 	-fx-background-color: -dark;
+	-fx-text-background-color: #ffffff;
 }
 
 .headline{
-    -fx-text-fill: -purple;
+    -fx-fill: -purple;
     -fx-font-size: large;
     -fx-font-weight: 900;
 }
@@ -79,4 +89,18 @@
 .column1{
 	-fx-background-color: -yellow;
 
+}
+
+//START SCENE
+
+.purple-box{
+    -fx-background-color: -purple;
+    -fx-text-fill: red;
+    -fx-padding: 10px;
+}
+
+.grey-box{
+   -fx-background-color: -grey;
+   -fx-fill: white;
+   -fx-padding: 20px;
 }
