@@ -13,9 +13,9 @@ public class PatternHeroGame implements Runnable {
 
     // Get / Set game Settings
     private Settings settings = new Settings();
-    private String song = settings.getSong();
-    private int lives = settings.getLives();
-
+    private int lives;
+    private int BPM;
+    private String midiFileName;
     AtomicReference<String> lastInput;
 
     UserInputHandler uih;
@@ -24,7 +24,10 @@ public class PatternHeroGame implements Runnable {
     private int missedNotes = 0;
 
     // Constructor, inserts uip.
-    public PatternHeroGame(UserInputHandler uih, AtomicReference<String> lastInput) {
+    public PatternHeroGame( int BPM, int lives, String midiFileName, UserInputHandler uih, AtomicReference<String> lastInput) {
+        this.BPM = BPM;
+        this.lives = lives;
+        this.midiFileName = midiFileName;
         this.uih = uih;
         this.lastInput = lastInput;
     }
@@ -35,7 +38,7 @@ public class PatternHeroGame implements Runnable {
     public void run() {
 
         //Start sequencer, this plays the song
-        PHSequencer ph = new PHSequencer(song, settings.getBPM(), lastInput);
+        PHSequencer ph = new PHSequencer(midiFileName, BPM, lastInput);
         ph.startSequencer();
         System.out.println("Song over");
 

@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -22,29 +21,33 @@
             <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Speed (BPM): " />
-                  <Spinner fx:id="bpmInput" editable="true" prefWidth="339.0" />
+                  <Button fx:id="btnSpeedSlow" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Slow" />
+                  <Button fx:id="btnSpeedMedium" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Medium" />
+                  <Button fx:id="btnSpeedFast" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Fast" />
                </children>
             </HBox>
             <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Lives: " />
-                  <Spinner fx:id="livesInput" editable="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="381.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Difficulty (Lives)" />
+                  <Button fx:id="btnDifficultyEasy" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Easy" />
+                  <Button fx:id="btnDifficultyMedium" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Medium" />
+                  <Button fx:id="btnDifficultyHard" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Hard" />
                </children>
             </HBox>
             <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="UI Theme: " />
-                  <Button fx:id="BtnThemeClassic" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="normal-button" text="Classic">
+                  <Button fx:id="btnThemeClassic" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Classic">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnThemeNeon" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="normal-button" text="Neon">
+                  <Button fx:id="btnThemeNeon" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Neon">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnThemePastel" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="normal-button" text="Pastel">
+                  <Button fx:id="btnThemePastel" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Pastel">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -64,41 +67,41 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Select a Song" />
             <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Song name" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Artist" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="The Blue Alsatian Mountains" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="S. Adams (1844–1913)" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="# of Notes: " />
                         <Text fx:id="noteAmount" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="99" />
                      </children>
                   </HBox>
-                  <Button fx:id="btnStartSong1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToGameplayScene" styleClass="normal-button" text="Start" />
+                  <Button fx:id="btnStartSong1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
                </children>
             </VBox>
             <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Song name" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Artist" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="When the Swallows Homeward Fly (Agathe)" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="F. Abt (1819–1885)" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="# of Notes: " />
                         <Text fx:id="noteAmount1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="99" />
                      </children>
                   </HBox>
-                  <Button fx:id="btnStartSong2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToGameplayScene" styleClass="normal-button" text="Start" />
+                  <Button fx:id="btnStartSong2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
                </children>
             </VBox>
             <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Song name" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Artist" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Vocalise No 1" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="F. Abt (1819–1885)ist" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="# of Notes: " />
                         <Text fx:id="noteAmount2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="99" />
                      </children>
                   </HBox>
-                  <Button fx:id="btnStartSong3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToGameplayScene" styleClass="normal-button" text="Start" />
+                  <Button fx:id="btnStartSong3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
                </children>
             </VBox>
          </children>

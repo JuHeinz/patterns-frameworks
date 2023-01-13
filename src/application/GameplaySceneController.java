@@ -36,12 +36,17 @@ public class GameplaySceneController {
     @FXML
     private Rectangle testNoteBlock;
 
+    @FXML
+    private Text bpmDisplay;
+
     /**
      * Displays information needed for start of game. Like songname + title.
      * This information comes from the StartScene
      */
-    public void setStartInformation(String songInfo){
-        songLabel.setText(songInfo);
+    public void setStartInformation(String songName, int BPM, int initialLives){
+        songLabel.setText(songName);
+        bpmDisplay.setText(String.valueOf(BPM));
+        liveCounter.setText(String.valueOf(initialLives));
 
     }
 
@@ -101,11 +106,19 @@ public class GameplaySceneController {
         scene = new Scene(root);
 
         //set CSS
-        String css = this.getClass().getResource(Settings.getTheme()).toExternalForm();
+        String css = this.getClass().getResource("/themes/classic-theme.css").toExternalForm();
         scene.getStylesheets().add(css);
+
+
+        //This line used to be in main, i dont know where to put it now so that it works
+        //TODO fix
+        //scene.setOnKeyPressed(userInputHandler.handle());
 
         stage.setScene(scene);
         stage.show();
     }
+
+    //USER INPUT
+    //On key input on the scene,
 
 }

@@ -15,9 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Main extends Application {
 	
 
-	static AtomicReference<String> lastInput = new AtomicReference<>("");
 
-	static UserInputHandler userInputHandler = new UserInputHandler(lastInput);
 
 	/**
 	 * start() Method is inherited from JavaFX Application class
@@ -32,7 +30,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 
 			//set CSS
-			String css = this.getClass().getResource(Settings.getTheme()).toExternalForm();
+			String css = this.getClass().getResource("/themes/classic-theme.css").toExternalForm();
 			scene.getStylesheets().add(css);
 
 			//Set Title
@@ -45,9 +43,7 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			//USER INPUT
-			//On key input on the scene,
-			scene.setOnKeyPressed(userInputHandler);
+
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -56,10 +52,6 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		
-		//GAME LOGIC THREAD
-		PatternHeroGame game = new PatternHeroGame(userInputHandler,lastInput);
-		Thread gameLogicThread = new Thread(game);
-		gameLogicThread.start();
 
 		//GRAPHICS THREAD (JavaFX creates a Thread automatically)
 		launch(args);
