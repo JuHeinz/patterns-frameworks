@@ -3,21 +3,23 @@ package music;
 
 import javax.sound.midi.*;
 import java.io.*;
-
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Plays a song and outputs the notes in sync with playback
+ * Plays a song and outputs upcoming notes
  */
 public class PHSequencer {
     PHReceiver receiver;
     Sequencer sequencer;
     Sequence sequence;
     File song;
-
+    String fileName;
+    long sequencerTickPosition;
     int BPM;
+    NoteToKeyTranslator noteToKeyTranslator;
 
-    public PHSequencer(String song, int BPM, AtomicReference<String> lastInput) {
+    public PHSequencer(String fileName, int BPM, AtomicReference<String> lastInput) {
         //Set up sequencer by getting corresponding Javax classes and methods
         try {
             // The Receiver listens for midi events
@@ -27,8 +29,10 @@ public class PHSequencer {
             // A sequence stores one or more tracks. Tracks are made up of MidiEvents
             // Set the mode of the sequence. We divide each note in quarters (PPQ), with the resolution, we indicate that one tick is one quarter note long
             this.sequence = new Sequence(Sequence.PPQ, 1);
-            this.song = new File("midi_files/"+ song);
+            this.fileName = fileName;
+            this.song = new File("midi_files/" + fileName);
             this.BPM = BPM;
+            this.noteToKeyTranslator = new NoteToKeyTranslator();
 
         } catch (MidiUnavailableException | InvalidMidiDataException e) {
             throw new RuntimeException(e);
@@ -43,7 +47,6 @@ public class PHSequencer {
             Thread.sleep(2000);
 
             //set speed of song in BPM
-            //TODO link to user setting
             sequencer.setTempoInBPM(BPM);
 
             //read input from midi file
@@ -51,26 +54,78 @@ public class PHSequencer {
             //put it into the sequencer as a sequence
             sequencer.setSequence(is);
 
-            //start sequencer, music plays
-            sequencer.start();
+            //PREPROCESS MIDI FILE
+            ArrayList<MidiEvent> noteOnEvents = extractNoteOnEvents(sequencer.getSequence());
+
 
             //set up transmitter, which will listen on the sequence and do something every time an event is processed
             sequencer.getTransmitter().setReceiver(receiver);
 
+            //start sequencer, music plays
+            sequencer.start();
+            System.out.println("Playing: " + fileName);
+
             //Check every 100 ms if the sequencer is still running, if not, close it.
+            //Also check current tickPosition of sequencer playback
+            int i = 0;
             while (sequencer.isRunning()) {
+                //Find current tick position of sequencer playback
+                sequencerTickPosition = sequencer.getTickPosition();
+                System.out.println("tick: " + sequencerTickPosition);
+                //If the tick of the sequencer is smaller than the currently anticipated note's tick, output upcoming tick.
+                if (sequencerTickPosition < noteOnEvents.get(i).getTick()) {
+                    MidiEvent noteOnEvent = noteOnEvents.get(i);
+                    int note = noteOnEvent.getMessage().getMessage()[1];
+                    String key = noteToKeyTranslator.translate(note);
+                    System.out.println("At tick " + noteOnEvents.get(i).getTick() + " press key: " + key);
+                    //TODO somehow use displayUpcomingKey(key) in GameplaySceneController
+                } else {
+                    //if the position in the sequencer is larger than the next anticipated note, meaning if the note was passed, select the next anticipated note
+                    //but only so long not all notes have been played
+                    if (i < noteOnEvents.size() - 1) {
+                        i++;
+                    }
+                }
+                //Repeat after 100 ms
                 Thread.sleep(100);
             }
-            //close sequencer
-            sequencer.close();
 
-            System.out.println(receiver.getNoteOnAmount());
+            sequencer.close();
+            System.out.println("Playback ended");
 
         } catch (MidiUnavailableException | InterruptedException | IOException | InvalidMidiDataException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Takes the sequence's events and returns only those that are of type NOTE_ON
+     *
+     * @param sequence The sequence (song) about to be played
+     * @return List of NOTE_ON events
+     */
+    public ArrayList<MidiEvent> extractNoteOnEvents(Sequence sequence) {
 
+        ArrayList<MidiEvent> noteOnEvents = new ArrayList<>();
+
+        //Only consider one track of the midi file, this is different for each file since some tracks may be mute, on test files, track 1 is ok.
+        Track[] tracks = sequence.getTracks();
+        Track track = tracks[1];
+
+        //track.size() = number of events in track
+        for (int i = 0; i < track.size() - 1; i++) {
+            //.get() gets the event at the specified index. Index refers to the total number of events in track, not ticks.
+            MidiEvent event = track.get(i);
+            //An event contains a message and a tick. The message has a status.
+            //If the status is 144 (NOTE_ON)
+            if (event.getMessage().getStatus() == 144) {
+                //add the event to the above list
+                noteOnEvents.add(event);
+            }
+        }
+
+        return noteOnEvents;
+
+    }
 
 }

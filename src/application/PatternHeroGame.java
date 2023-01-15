@@ -16,6 +16,7 @@ public class PatternHeroGame implements Runnable {
     private int lives;
     private int BPM;
     private String midiFileName;
+
     AtomicReference<String> lastInput;
 
     UserInputHandler uih;
@@ -43,6 +44,9 @@ public class PatternHeroGame implements Runnable {
         System.out.println("Song over");
 
     }
+
+
+
 }
 
 

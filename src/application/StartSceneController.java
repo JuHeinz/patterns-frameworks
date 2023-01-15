@@ -139,7 +139,7 @@ public class StartSceneController {
 
     private void setBPM(String buttonID){
         switch (buttonID){
-            case "btnSpeedSlow" -> this.BPM = 55;
+            case "btnSpeedSlow" -> this.BPM = 10;
             case "btnSpeedMedium" -> this.BPM = 90;
             case "btnSpeedFast" -> this.BPM = 100;
         }

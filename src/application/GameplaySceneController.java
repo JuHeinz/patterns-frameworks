@@ -34,6 +34,8 @@ public class GameplaySceneController {
     private Text songLabel;
 
     @FXML
+    private Text upcomingKeyIndicator;
+    @FXML
     private Rectangle testNoteBlock;
 
     @FXML
@@ -51,8 +53,13 @@ public class GameplaySceneController {
     }
 
 
+    public void displayUpcomingKey(String key){
+        upcomingKeyIndicator.setText(key);
+    }
+
     /**
-     * @param e Sets text in scene according to how well user hit note, updates live count.
+     *Sets text in scene according to how well user hit note, updates live count.
+     * @param e
      */
     public void giveFeedback(ActionEvent e) {
         String noteFeedbackText;
@@ -85,18 +92,7 @@ public class GameplaySceneController {
     public void createNoteBlock(String nextKey){
         Rectangle noteBlock = new Rectangle();
 
-        switch (nextKey){
-            //TODO Input in corresponding pane, according to key
 
-            case "A":
-                break;
-            case "S":
-                break;
-            case "D":
-                break;
-            case "F":
-                break;
-        }
     }
     public void switchToStartScene(ActionEvent event) throws IOException {
 
@@ -110,7 +106,7 @@ public class GameplaySceneController {
         scene.getStylesheets().add(css);
 
 
-        //This line used to be in main, i dont know where to put it now so that it works
+        //This line used to be in main, i don't know where to put it now so that it works
         //TODO fix
         //scene.setOnKeyPressed(userInputHandler.handle());
 
