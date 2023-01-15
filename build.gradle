@@ -1,0 +1,32 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+repositories {
+    //mavenLocal()
+    mavenCentral()
+}
+
+javafx {
+    version = "19"
+    modules = [ 'javafx.controls' , 'javafx.fxml' ]
+}
+
+group = 'de.vfh.puf'
+version = '1.0'
+description = 'PatternHero'
+java.sourceCompatibility = JavaVersion.VERSION_17
+
+mainClassName = 'application.Main'
+
+// legacy
+
+wrapper {
+    gradleVersion = '7.6'
+}
+
+sourceSets {
+    main.java.srcDirs = ['src']
+    main.resources.srcDirs = ['src']
+}
