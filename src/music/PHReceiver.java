@@ -69,13 +69,16 @@ public class PHReceiver implements Receiver {
         return key;
     }
 
-    public void compareNoteToKey(){
-        //TODO Here the last played note and the last input key need to be compared but I don't know how
-        if(lastInput.get() == key){
+    public void compareNoteToKey() {
+        String input = lastInput.get();
+        if (input == null) {
+            System.out.println("MISSED!");
+        } else if (input.equalsIgnoreCase(key)) {
             System.out.println("CORRECT!");
-        }else{
+        } else {
             System.out.println("FALSE!");
         }
+        lastInput.set(""); // reset
     }
     public int getNoteOnAmount() {
         return noteOnAmount;

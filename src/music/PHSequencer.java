@@ -15,9 +15,11 @@ public class PHSequencer {
     Sequence sequence;
     File song;
     String fileName;
-    long sequencerTickPosition;
+    public volatile long sequencerTickPosition;
     int BPM;
     NoteToKeyTranslator noteToKeyTranslator;
+    public volatile String nextNote;
+    public volatile long nextTick;
 
     public PHSequencer(String fileName, int BPM, AtomicReference<String> lastInput) {
         //Set up sequencer by getting corresponding Javax classes and methods
@@ -79,6 +81,8 @@ public class PHSequencer {
                     String key = noteToKeyTranslator.translate(note);
                     System.out.println("At tick " + noteOnEvents.get(i).getTick() + " press key: " + key);
                     //TODO somehow use displayUpcomingKey(key) in GameplaySceneController
+                    nextTick = noteOnEvents.get(i).getTick();
+                    nextNote = key;
                 } else {
                     //if the position in the sequencer is larger than the next anticipated note, meaning if the note was passed, select the next anticipated note
                     //but only so long not all notes have been played

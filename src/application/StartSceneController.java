@@ -6,11 +6,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class StartSceneController {
@@ -25,10 +26,6 @@ public class StartSceneController {
     private int lives;
     private int BPM;
 
-    static AtomicReference<String> lastInput = new AtomicReference<>("");
-
-    static UserInputHandler userInputHandler = new UserInputHandler(lastInput);
-
     public void listenToButton(ActionEvent event) throws IOException {
         Button pressedButton = (Button) event.getSource();
         String buttonId = pressedButton.getId();
@@ -38,7 +35,7 @@ public class StartSceneController {
         }
         //If start Button, startGame()
         else if (Objects.equals(buttonId, "btnStartSong1") | Objects.equals(buttonId, "btnStartSong2") | Objects.equals(buttonId, "btnStartSong3")) {
-            startGame(event);
+            switchToGameplayScene(event);
         }
         //If speed Button, change difficulty
         else if (Objects.equals(buttonId, "btnSpeedSlow") | Objects.equals(buttonId, "btnSpeedMedium") | Objects.equals(buttonId, "btnSpeedFast")) {
@@ -51,28 +48,6 @@ public class StartSceneController {
 
     }
 
-    public void startGame(ActionEvent event) throws IOException {
-
-        setSongInformationFromButton(event);
-
-        //If user did not make speed selection, speed is 90 (=regular)
-        if (BPM == 0){
-            this.BPM = 90;
-        }
-
-        //If user did not make difficulty selection, lives is 50 (=regular)
-        if (lives == 0){
-            this.lives = 50;
-        }
-
-        //Instantiate and declare a new game and run it in its own thread
-        PatternHeroGame game = new PatternHeroGame(BPM, lives, midiFileName,userInputHandler,lastInput);
-        Thread gameLogicThread = new Thread(game);
-        gameLogicThread.start();
-
-        //Have JavaFX switch to Gameplay Scene
-        switchToGameplayScene(event);
-    }
 
     public void switchToGameplayScene(ActionEvent event) throws IOException {
 
@@ -83,8 +58,9 @@ public class StartSceneController {
         // Insert settings into GameplayScene via instance of GameplaySceneController
         GameplaySceneController gameplaySceneController = loader.getController();
 
+        setSongInformationFromButton(event);
         //Choose which song name to display according to selected button
-        gameplaySceneController.setStartInformation(songName, BPM, lives);
+        gameplaySceneController.setStartInformation(songName, midiFileName, BPM, lives);
 
         //Set Stage
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -97,8 +73,17 @@ public class StartSceneController {
         }
         scene.getStylesheets().add(theme);
 
+        //Set the input handler
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent e) {
+                gameplaySceneController.handleKeyboard(e);
+            }
+        });
+
         stage.setScene(scene);
         stage.show();
+        
+        gameplaySceneController.startGame();
     }
 
     private String switchTheme(String buttonID){

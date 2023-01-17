@@ -6,11 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 /**
@@ -21,10 +24,13 @@ import java.io.IOException;
 
 
 public class GameplaySceneController {
+    private PatternHeroGame game;
     private Stage stage;
     private Scene scene;
     private Parent root;
-    int lives = 100;
+    private int lives;
+    private String midiFileName;
+    private int BPM;
 
     @FXML
     private Text noteFeedback;
@@ -40,18 +46,20 @@ public class GameplaySceneController {
 
     @FXML
     private Text bpmDisplay;
+    static AtomicReference<String> lastInput = new AtomicReference<>("");
 
     /**
      * Displays information needed for start of game. Like songname + title.
      * This information comes from the StartScene
      */
-    public void setStartInformation(String songName, int BPM, int initialLives){
+    public void setStartInformation(String songName, String midiFileName, int BPM, int initialLives){
+        this.BPM = BPM;
+        lives = initialLives;
         songLabel.setText(songName);
+        this.midiFileName = midiFileName;
         bpmDisplay.setText(String.valueOf(BPM));
         liveCounter.setText(String.valueOf(initialLives));
-
     }
-
 
     public void displayUpcomingKey(String key){
         upcomingKeyIndicator.setText(key);
@@ -59,27 +67,31 @@ public class GameplaySceneController {
 
     /**
      *Sets text in scene according to how well user hit note, updates live count.
-     * @param e
      */
-    public void giveFeedback(ActionEvent e) {
+    public void giveFeedback(String key) {
+
+        long tick = game.ph.sequencerTickPosition;
+
         String noteFeedbackText;
-        // create random number, just temp until actually connected to user inputs
-        int min = 0; // Minimum value of range
-        int max = 10; // Maximum value of range
-        int random_int = (int) Math.floor(Math.random() * (max - min + 1) + min);
 
-
-        if (random_int <= 3) {
-            noteFeedbackText = "Bad";
-            lives = lives - 1;
-        } else if (random_int > 3 && random_int < 6) {
-            noteFeedbackText = "OK";
+        String note = game.ph.nextNote;
+        if (key.equalsIgnoreCase(note)) {
+            long lag = game.ph.nextTick - tick;
+            if (Math.abs(lag) > 100) {
+                noteFeedbackText = "Bad";
+                lives--;
+            } else if (Math.abs(lag) > 10) {
+                noteFeedbackText = "OK";
+            } else {
+                noteFeedbackText = "PERFECT!";
+            }
+            System.out.printf("Score: %d (%s) %n", lag, noteFeedbackText);
         } else {
-            noteFeedbackText = "PERFECT!";
+            noteFeedbackText = "FALSE!"; lives--;
         }
         noteFeedback.setText(noteFeedbackText);
         liveCounter.setText(String.valueOf(lives));
-        rainNoteBlock();
+        lastInput.set(key);
     }
 
     private double y;
@@ -94,6 +106,25 @@ public class GameplaySceneController {
 
 
     }
+
+    public void startGame() throws IOException {
+
+        //If user did not make speed selection, speed is 90 (=regular)
+        if (BPM == 0) {
+            BPM = 90;
+        }
+
+        //If user did not make difficulty selection, lives is 50 (=regular)
+        if (lives == 0) {
+            lives = 50;
+        }
+
+        //Instantiate and declare a new game and run it in its own thread
+        game = new PatternHeroGame(BPM, lives, midiFileName, lastInput);
+        Thread gameLogicThread = new Thread(game);
+        gameLogicThread.start();
+    }
+
     public void switchToStartScene(ActionEvent event) throws IOException {
 
         //Load Gameplay Scene
@@ -117,4 +148,13 @@ public class GameplaySceneController {
     //USER INPUT
     //On key input on the scene,
 
+    public void handleButton(ActionEvent e) {
+        giveFeedback(((Button)e.getSource()).getText());
+    }
+
+    public void handleKeyboard(KeyEvent event) {
+        String key = event.getText();
+        if ("asdflkjhASDFLKJH".contains(key))
+            giveFeedback(key.toUpperCase());
+    }
 }
