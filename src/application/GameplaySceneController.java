@@ -12,8 +12,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.nio.file.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import javafx.beans.property.SimpleLongProperty;
+import static java.nio.file.StandardOpenOption.*;
 
 
 public class GameplaySceneController {
@@ -133,6 +136,17 @@ public class GameplaySceneController {
         game = new PatternHeroGame(BPM, lives, midiFileName, this);
         Thread gameLogicThread = new Thread(game);
         gameLogicThread.start();
+    }
+
+    public void logHistory() throws IOException {
+        Files.write(Paths.get("history.csv"),
+            "%s;%s;%s;%s".formatted(
+                LocalDateTime.now(),
+                P1PointsDisplay.getText(),
+                P2PointsDisplay.getText(),
+                System.lineSeparator()
+            ).getBytes(), APPEND,CREATE
+        );
     }
 
     /**
