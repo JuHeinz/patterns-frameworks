@@ -56,35 +56,65 @@ public class GameplaySceneController {
     /**
      *Sets text in scene according to how well user hit note, updates live count. Gets called on key press or mouse click.
      */
-    public void giveFeedback(String key) {
-
-        //TODO move this function call so it is updated every few miliseconds, not on key press
-        markNoteBlock(game.ph.nextNote);
+    public void giveFeedback(String inputKey) {
 
         long tick = game.ph.sequencerTickPosition;
 
+        int player;
+        String key;
+        int notePointsAmount;
         String noteFeedbackText;
+
+        if ("HJKLhjkl".contains(inputKey)) {
+            player = 2;
+            key = Player.mapPlayerKey(inputKey);
+        } else {
+            player = 1;
+            key = inputKey;
+        }
 
         String note = game.ph.nextNote;
         if (key.equalsIgnoreCase(note)) {
             long lag = game.ph.nextTick - tick;
             if (Math.abs(lag) > 200) {
+                notePointsAmount = 1;
                 noteFeedbackText = "Bad";
             } else if (Math.abs(lag) > 100) {
+                notePointsAmount = 10;
                 noteFeedbackText = "Okay";
             } else {
+                notePointsAmount = 100;
                 noteFeedbackText = "PERFECT!";
             }
-            System.out.printf("Score: %d (%s) %n", lag, noteFeedbackText);
+            System.out.printf("Player %d score: %d (%s) %n", player, notePointsAmount, noteFeedbackText);
         } else {
-            noteFeedbackText = "FALSE!"; lives--;
+            lives--;
+            notePointsAmount = 0;
+            noteFeedbackText = "FALSE!";
         }
-        P1noteFeedback.setText(noteFeedbackText);
+
+        if (player == 1) {
+            P1noteFeedback.setText(noteFeedbackText);
+            P1PointsDisplay.setText(Integer.toString(Integer.parseInt(P1PointsDisplay.getText()) + notePointsAmount));
+        }
+        if (player == 2) {
+            P2noteFeedback.setText(noteFeedbackText);
+            P2PointsDisplay.setText(Integer.toString(Integer.parseInt(P2PointsDisplay.getText()) + notePointsAmount));
+        }
+
         sharedLivesDisplay.setText(String.valueOf(lives));
+
+        if (lives <= 0) {
+            stopGame();
+        }
     }
 
     public void updateUI(long tick) {
         System.out.println("tick " + tick); /* update UI here */ 
+    }
+
+    public void stopGame() {
+        game.ph.stopSequencer(); // SwitchToGameOverScene
     }
 
     public void startGame() {
