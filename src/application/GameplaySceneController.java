@@ -16,36 +16,29 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-/**
- * Handles incoming requests from the model zu change the view.
- *
- * @author julia
- */
-
-
 public class GameplaySceneController {
     private PatternHeroGame game;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     private int lives;
     private String midiFileName;
     private int BPM;
 
     @FXML
-    private Text noteFeedback;
+    private Text P1noteFeedback;
+
     @FXML
-    private Text liveCounter;
+    private Text P2noteFeedback;
+
     @FXML
     private Text songLabel;
+    @FXML
+    private Text sharedLivesDisplay;
 
     @FXML
-    private Text upcomingKeyIndicator;
-    @FXML
-    private Rectangle testNoteBlock;
+    private Text P1PointsDisplay;
 
     @FXML
-    private Text bpmDisplay;
+    private Text P2PointsDisplay;
+
     static AtomicReference<String> lastInput = new AtomicReference<>("");
 
     /**
@@ -57,18 +50,16 @@ public class GameplaySceneController {
         lives = initialLives;
         songLabel.setText(songName);
         this.midiFileName = midiFileName;
-        bpmDisplay.setText(String.valueOf(BPM));
-        liveCounter.setText(String.valueOf(initialLives));
-    }
-
-    public void displayUpcomingKey(String key){
-        upcomingKeyIndicator.setText(key);
+        sharedLivesDisplay.setText(String.valueOf(initialLives));
     }
 
     /**
-     *Sets text in scene according to how well user hit note, updates live count.
+     *Sets text in scene according to how well user hit note, updates live count. Gets called on key press or mouse click.
      */
     public void giveFeedback(String key) {
+
+        //TODO move this function call so it is updated every few miliseconds, not on key press
+        markNoteBlock(game.ph.nextNote);
 
         long tick = game.ph.sequencerTickPosition;
 
@@ -77,11 +68,10 @@ public class GameplaySceneController {
         String note = game.ph.nextNote;
         if (key.equalsIgnoreCase(note)) {
             long lag = game.ph.nextTick - tick;
-            if (Math.abs(lag) > 100) {
+            if (Math.abs(lag) > 200) {
                 noteFeedbackText = "Bad";
-                lives--;
-            } else if (Math.abs(lag) > 10) {
-                noteFeedbackText = "OK";
+            } else if (Math.abs(lag) > 100) {
+                noteFeedbackText = "Okay";
             } else {
                 noteFeedbackText = "PERFECT!";
             }
@@ -89,25 +79,14 @@ public class GameplaySceneController {
         } else {
             noteFeedbackText = "FALSE!"; lives--;
         }
-        noteFeedback.setText(noteFeedbackText);
-        liveCounter.setText(String.valueOf(lives));
+        P1noteFeedback.setText(noteFeedbackText);
+        sharedLivesDisplay.setText(String.valueOf(lives));
         lastInput.set(key);
     }
 
-    private double y;
-
-    public void rainNoteBlock() {
-        testNoteBlock.setY(y = y + 25);
-        //if note block out of screen delete it
-    }
-
-    public void createNoteBlock(String nextKey){
-        Rectangle noteBlock = new Rectangle();
 
 
-    }
-
-    public void startGame() throws IOException {
+    public void startGame() {
 
         //If user did not make speed selection, speed is 90 (=regular)
         if (BPM == 0) {
@@ -125,36 +104,93 @@ public class GameplaySceneController {
         gameLogicThread.start();
     }
 
+    /**
+     * Function to stop playback and go back to main menu on "quit" button press
+     */
     public void switchToStartScene(ActionEvent event) throws IOException {
+        //stops sequencer
+        game.ph.stopSequencer();
+
 
         //Load Gameplay Scene
-        root = FXMLLoader.load(getClass().getResource("StartScene.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Parent root = FXMLLoader.load(getClass().getResource("StartScene.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
 
         //set CSS
         String css = this.getClass().getResource("/themes/classic-theme.css").toExternalForm();
         scene.getStylesheets().add(css);
 
-
-        //This line used to be in main, i don't know where to put it now so that it works
-        //TODO fix
-        //scene.setOnKeyPressed(userInputHandler.handle());
-
         stage.setScene(scene);
         stage.show();
     }
 
-    //USER INPUT
-    //On key input on the scene,
 
+    /**
+     * Handles click on button, alternative to keyboard input
+     * @param e
+     */
     public void handleButton(ActionEvent e) {
         giveFeedback(((Button)e.getSource()).getText());
     }
 
+    /**
+     * Handles keyboard input
+     * @param event The event of the key that was pressed
+     */
     public void handleKeyboard(KeyEvent event) {
         String key = event.getText();
         if ("asdflkjhASDFLKJH".contains(key))
             giveFeedback(key.toUpperCase());
     }
+
+    @FXML
+    private Rectangle aNoteBlock;
+
+    @FXML
+    private Rectangle sNoteBlock;
+
+    @FXML
+    private Rectangle dNoteBlock;
+
+    @FXML
+    private Rectangle fNoteBlock;
+
+
+
+    /**
+     * Marks what note to press next on screen
+     * @param nextNote next note user has to press
+     */
+    public void markNoteBlock(String nextNote){
+        String defaultStyle = "-fx-fill: black;";
+        String upNextStyle = "-fx-fill:white;";
+
+        //reset style for all blocks
+        aNoteBlock.setStyle(defaultStyle);
+        sNoteBlock.setStyle(defaultStyle);
+        dNoteBlock.setStyle(defaultStyle);
+        fNoteBlock.setStyle(defaultStyle);
+
+        //set style for upcoming block
+        switch (nextNote){
+            case "A":
+                aNoteBlock.setStyle(upNextStyle);
+                break;
+           case "S":
+               sNoteBlock.setStyle(upNextStyle);
+               break;
+           case "D":
+               dNoteBlock.setStyle(upNextStyle);
+               break;
+           case "F":
+               fNoteBlock.setStyle(upNextStyle);
+               break;
+        }
+
+
+
+    }
+
+
 }

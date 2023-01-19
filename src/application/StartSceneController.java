@@ -16,10 +16,6 @@ import java.util.Objects;
 
 public class StartSceneController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     private String theme;
     private String songName;
     private String midiFileName;
@@ -53,7 +49,7 @@ public class StartSceneController {
 
         //Load Gameplay Scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameplayScene.fxml"));
-        root = loader.load();
+        Parent root = loader.load();
 
         // Insert settings into GameplayScene via instance of GameplaySceneController
         GameplaySceneController gameplaySceneController = loader.getController();
@@ -63,8 +59,8 @@ public class StartSceneController {
         gameplaySceneController.setStartInformation(songName, midiFileName, BPM, lives);
 
         //Set Stage
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
 
         //set CSS
         //If user did not make any selection, classic theme is used
@@ -124,7 +120,7 @@ public class StartSceneController {
 
     private void setBPM(String buttonID){
         switch (buttonID){
-            case "btnSpeedSlow" -> this.BPM = 10;
+            case "btnSpeedSlow" -> this.BPM = 40;
             case "btnSpeedMedium" -> this.BPM = 90;
             case "btnSpeedFast" -> this.BPM = 100;
         }

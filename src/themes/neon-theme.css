@@ -37,7 +37,6 @@
 /* GAMEPLAY SCENE*/
 
 .note-block{
-	-fx-text-fill: white;
 		-fx-fill: -dark;
 		-fx-width: 1;
 }

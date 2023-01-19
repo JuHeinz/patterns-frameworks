@@ -2,10 +2,10 @@
 
 /*GENERAL*/
 .root{
-    -yellow: #fff58f;
-    -red: #f2ab9b;
-    -purple: #a388f7;
-    -turquoise:#82face;
+    -yellow: #fcf7c0;
+    -red: #f7ddd7;
+    -purple: #eae3ff;
+    -turquoise:#baffe6;
     -dark: #16161A;
     -grey: #27272e;
 }
@@ -34,7 +34,6 @@
 /* GAMEPLAY SCENE*/
 
 .note-block{
-	-fx-text-fill: white;
 		-fx-fill: -dark;
 		-fx-width: 1;
 }

@@ -36,9 +36,12 @@
 /* GAMEPLAY SCENE*/
 
 .note-block{
-	-fx-text-fill: white;
-		-fx-fill: -dark;
-		-fx-width: 1;
+	-fx-fill: -dark;
+	-fx-width: 1;
+}
+.next-up{
+    -fx-fill: white;
+    	-fx-width: 1;
 }
 
 #paneA{

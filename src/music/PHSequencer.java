@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * Plays a song and outputs upcoming notes
  */
 public class PHSequencer {
-    PHReceiver receiver;
     Sequencer sequencer;
     Sequence sequence;
     File song;
@@ -24,8 +23,7 @@ public class PHSequencer {
     public PHSequencer(String fileName, int BPM, AtomicReference<String> lastInput) {
         //Set up sequencer by getting corresponding Javax classes and methods
         try {
-            // The Receiver listens for midi events
-            this.receiver = new PHReceiver(lastInput);
+
             // The Sequencer is the class that plays the music
             this.sequencer = MidiSystem.getSequencer();
             // A sequence stores one or more tracks. Tracks are made up of MidiEvents
@@ -59,10 +57,6 @@ public class PHSequencer {
             //PREPROCESS MIDI FILE
             ArrayList<MidiEvent> noteOnEvents = extractNoteOnEvents(sequencer.getSequence());
 
-
-            //set up transmitter, which will listen on the sequence and do something every time an event is processed
-            sequencer.getTransmitter().setReceiver(receiver);
-
             //start sequencer, music plays
             sequencer.start();
             System.out.println("Playing: " + fileName);
@@ -80,7 +74,6 @@ public class PHSequencer {
                     int note = noteOnEvent.getMessage().getMessage()[1];
                     String key = noteToKeyTranslator.translate(note);
                     System.out.println("At tick " + noteOnEvents.get(i).getTick() + " press key: " + key);
-                    //TODO somehow use displayUpcomingKey(key) in GameplaySceneController
                     nextTick = noteOnEvents.get(i).getTick();
                     nextNote = key;
                 } else {
@@ -100,6 +93,11 @@ public class PHSequencer {
         } catch (MidiUnavailableException | InterruptedException | IOException | InvalidMidiDataException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void stopSequencer(){
+        sequencer.close();
+        System.out.println("Sequencer closed");
     }
 
     /**

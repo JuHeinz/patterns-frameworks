@@ -67,14 +67,15 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Select a Song" />
             <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
                <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Vocalise No 1" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="F. Abt (1819–1885)" />
+                  <Button fx:id="btnStartSong3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
+               </children>
+            </VBox>
+            <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
+               <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="The Blue Alsatian Mountains" />
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="S. Adams (1844–1913)" />
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="# of Notes: " />
-                        <Text fx:id="noteAmount" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="99" />
-                     </children>
-                  </HBox>
                   <Button fx:id="btnStartSong1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
                </children>
             </VBox>
@@ -82,26 +83,7 @@
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="When the Swallows Homeward Fly (Agathe)" />
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="F. Abt (1819–1885)" />
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="# of Notes: " />
-                        <Text fx:id="noteAmount1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="99" />
-                     </children>
-                  </HBox>
                   <Button fx:id="btnStartSong2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
-               </children>
-            </VBox>
-            <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
-               <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Vocalise No 1" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="F. Abt (1819–1885)ist" />
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="# of Notes: " />
-                        <Text fx:id="noteAmount2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="99" />
-                     </children>
-                  </HBox>
-                  <Button fx:id="btnStartSong3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
                </children>
             </VBox>
          </children>
