@@ -18,13 +18,13 @@
             <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Player 1: " />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Text" />
+                  <Text fx:id="p1Score" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Text" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Player 2: " />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Text" />
+                  <Text fx:id="p2Score" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Text" />
                </children>
             </HBox>
          </children>

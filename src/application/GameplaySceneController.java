@@ -1,6 +1,5 @@
 package application;
 
-import javafx.beans.property.SimpleLongProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,11 +12,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.nio.file.*;
-import java.util.Objects;
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import static java.nio.file.StandardOpenOption.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
 
 
 public class GameplaySceneController {
@@ -50,6 +55,14 @@ public class GameplaySceneController {
     @FXML
     private Button fBtn;
     @FXML
+    private Button hBtn;
+    @FXML
+    private Button jBtn;
+    @FXML
+    private Button kBtn;
+    @FXML
+    private Button lBtn;
+    @FXML
     private Rectangle aNoteBlock;
     @FXML
     private Rectangle sNoteBlock;
@@ -65,6 +78,8 @@ public class GameplaySceneController {
     private Rectangle kNoteBlock;
     @FXML
     private Rectangle lNoteBlock;
+
+    private boolean isOver;
 
     /**
      * Displays information needed for start of game. Like songname + title.
@@ -82,7 +97,7 @@ public class GameplaySceneController {
      * Sets text in scene according to how well user hit note, updates live count. Gets called on key press or mouse click.
      */
     public void giveFeedback(String inputKey) {
-
+        if (!isOver){
         long tick = game.ph.sequencerTickPosition;
 
         int player;
@@ -132,57 +147,66 @@ public class GameplaySceneController {
         if (lives <= 0) {
             stopGame();
         }
+        }
     }
+
+
 
     //this gets called from the sequencer every 100ms
     public void updateUI(long sequencerTickPosition, String nextNote, long nextTick) {
+        List<Button> allButtons = Arrays.asList(aBtn, sBtn,dBtn,fBtn,hBtn,jBtn,kBtn,lBtn);
+        List<Rectangle> allRectangles = Arrays.asList(aNoteBlock, sNoteBlock,dNoteBlock,fNoteBlock,hNoteBlock,jNoteBlock,kNoteBlock,lNoteBlock);
+
+        //Avoid throwing an error on the first note
         if (nextNote == null) {
             nextNote = "A";
         }
 
-        long yPosition = calculateRelativeDistance(nextTick, sequencerTickPosition);
-        String defaultStyle = "-fx-fill: black;";
-        String upNextStyle = "-fx-fill:white;";
+        long distance = calculateRelativeDistance(nextTick, sequencerTickPosition);
 
-        //reset style for all blocks
-        aNoteBlock.setStyle(defaultStyle);
-        sNoteBlock.setStyle(defaultStyle);
-        dNoteBlock.setStyle(defaultStyle);
-        fNoteBlock.setStyle(defaultStyle);
-        hNoteBlock.setStyle(defaultStyle);
-        jNoteBlock.setStyle(defaultStyle);
-        kNoteBlock.setStyle(defaultStyle);
-        lNoteBlock.setStyle(defaultStyle);
+        //Reset styles
+        for (Rectangle r : allRectangles){
+            r.setStyle(defaultStyle);
+        }
 
-        //set style for upcoming block
+        for (Button b : allButtons){
+            b.setStyle(notNowStyle);
+        }
+
+        //set style for upcoming blocks and buttons
         switch (nextNote) {
-            case "A" -> {
-                aNoteBlock.setStyle(upNextStyle);
-                aNoteBlock.setY(yPosition * 10);
-                hNoteBlock.setStyle(upNextStyle);
-            }
-            case "S" -> {
-                sNoteBlock.setStyle(upNextStyle);
-                jNoteBlock.setStyle(upNextStyle);
-            }
-            case "D" -> {
-                dNoteBlock.setStyle(upNextStyle);
-                kNoteBlock.setStyle(upNextStyle);
-            }
-            case "F" -> {
-                fNoteBlock.setStyle(upNextStyle);
-                lNoteBlock.setStyle(upNextStyle);
-            }
+            case "A" -> setStyles(aNoteBlock,hNoteBlock,aBtn,hBtn,distance);
+            case "S" -> setStyles(sNoteBlock,jNoteBlock,sBtn,jBtn,distance);
+            case "D" -> setStyles(dNoteBlock,kNoteBlock,dBtn,kBtn,distance);
+            case "F" -> setStyles(fNoteBlock,lNoteBlock,fBtn,lBtn,distance);
         }
 
 
     }
 
+    String defaultStyle = "-fx-fill: #16161A;";
+    String upNextStyle = "-fx-fill:white;";
+    String nowStyle = "-fx-background-color:;";
+    String notNowStyle = "-fx-background-color: #16161A;";
+
+
+    public void setStyles(Rectangle noteBlock1,Rectangle noteBlock2, Button b1, Button b2, long distance ){
+        if (distance <= 50){
+            b1.setStyle(nowStyle);
+            b2.setStyle(nowStyle);
+        }else {
+            b1.setStyle(notNowStyle);
+            b2.setStyle(notNowStyle);
+        }
+        noteBlock1.setStyle(upNextStyle);
+        noteBlock2.setStyle(upNextStyle);
+    }
     public void stopGame() {
         game.ph.stopSequencer();
         // previously invisible button is shown
         btnViewResults.setVisible(true);
         textGameOver.setVisible(true);
+        setOver(true);
     }
 
 
@@ -221,19 +245,21 @@ public class GameplaySceneController {
 
     }
 
+
     public void logHistory() throws IOException {
         Files.write(Paths.get("history.csv"),
-            "%s;%s;%s;%s".formatted(
-                LocalDateTime.now(),
-                P1PointsDisplay.getText(),
-                P2PointsDisplay.getText(),
-                System.lineSeparator()
-            ).getBytes(), APPEND,CREATE
+                "%s;%s;%s;%s;%s".formatted(
+                        LocalDateTime.now(),
+                        P1PointsDisplay.getText(),
+                        P2PointsDisplay.getText(),
+                        game.ph.getFileName(),
+                System.lineSeparator()).getBytes(), APPEND, CREATE
         );
     }
 
+
     /**
-     * Function to stop playback and go back to main menu on "quit" button press
+     * Function to switch to Start Screen or Game Over Screen after gameplay
      */
     public void switchToScene(ActionEvent event) throws IOException {
         //stops sequencer
@@ -273,7 +299,7 @@ public class GameplaySceneController {
     }
 
     /**
-     * Handles keyboard input
+     * Checks if pressed keyboard button is one of the game keys and processes it from there
      *
      * @param event The event of the key that was pressed
      */
@@ -284,4 +310,11 @@ public class GameplaySceneController {
     }
 
 
+    public boolean isOver() {
+        return isOver;
+    }
+
+    public void setOver(boolean over) {
+        isOver = over;
+    }
 }

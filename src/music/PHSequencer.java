@@ -14,6 +14,11 @@ public class PHSequencer {
     Sequencer sequencer;
     Sequence sequence;
     File song;
+
+    public String getFileName() {
+        return fileName;
+    }
+
     String fileName;
     public volatile long sequencerTickPosition;
     int BPM;

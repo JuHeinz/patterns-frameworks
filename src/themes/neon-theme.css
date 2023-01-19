@@ -21,6 +21,7 @@
 	-fx-border-color: -yellow;
 	-fx-border-radius: 20px;
 	-fx-background-radius: 20px;
+
 }
 
 .dark-bg{
@@ -33,7 +34,11 @@
     -fx-font-size: large;
     -fx-font-weight: 900;
 }
-
+.super-large{
+    -fx-font-weight: 900;
+    -fx-font-size: 35;
+    -fx-fill: -purple;
+}
 /* GAMEPLAY SCENE*/
 
 .note-block{
@@ -60,31 +65,29 @@
 		-fx-text-fill: white;
 		-fx-font-size: large;
 		-fx-font-weight: 900;
-		-fx-background-color: -dark;
-		-fx-border-width: 10;
+		-fx-border-width: 4;
 		-fx-border-style: solid;
+		-fx-border-color: white;
 		-fx-border-radius: 30;
+		-fx-background-radius: 35;
 }
 
 .btn1{
-	-fx-border-color: -yellow;
+	-fx-background-color: -yellow;
 }
 
 .btn2{
-	-fx-border-color: -red;
+	-fx-background-color: -red;
 }
 
 .btn3{
-	-fx-border-color: -purple;
+	-fx-background-color: -purple;
 }
 
 .btn4{
-	-fx-border-color: -turquoise;
+	-fx-background-color: -turquoise;
 }
 
-.btn5{
-	-fx-background-color: #E23C2E
-}
 
 .column1{
 	-fx-background-color: -yellow;

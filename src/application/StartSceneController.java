@@ -6,8 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,7 +13,6 @@ import java.util.Objects;
 
 
 public class StartSceneController {
-
     private String theme;
     private String songName;
     private String midiFileName;
@@ -70,17 +67,27 @@ public class StartSceneController {
         scene.getStylesheets().add(theme);
 
         //Set the input handler
-        scene.setOnKeyPressed(new EventHandler<>() {
-            public void handle(KeyEvent e) {
-                gameplaySceneController.handleKeyboard(e);
-            }
-        });
+        scene.setOnKeyPressed(e -> gameplaySceneController.handleKeyboard(e));
 
         stage.setScene(scene);
         stage.show();
-        
+
         gameplaySceneController.startGame();
     }
+
+    public void switchToHighscoreScene(ActionEvent event) throws IOException {
+        //Load Scene
+        Parent root = FXMLLoader.load(getClass().getResource("HighScoreScene.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+
+        //set CSS
+        String css = this.getClass().getResource("/themes/classic-theme.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     private String switchTheme(String buttonID){
         String themeName;
@@ -93,7 +100,6 @@ public class StartSceneController {
             themeName = "pastel-theme.css";
         }
         System.out.println("Theme set to:" + themeName);
-
         //Return theme to be used in GameplayScene when it is loaded
         return this.getClass().getResource("/themes/"+ themeName).toExternalForm();
     }
