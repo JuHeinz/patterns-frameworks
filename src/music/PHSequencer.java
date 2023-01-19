@@ -83,7 +83,7 @@ public class PHSequencer {
                         i++;
                     }
                 }
-                parent.updateUI(sequencerTickPosition);
+                parent.updateUI(sequencerTickPosition, nextNote, nextTick);
                 //Repeat after 100 ms
                 Thread.sleep(100);
             }

@@ -15,81 +15,84 @@
             <Font name="Consolas Bold" size="44.0" />
          </font>
       </Text>
-      <VBox layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" spacing="5.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Settings" />
-            <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Speed (BPM): " />
-                  <Button fx:id="btnSpeedSlow" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Slow" />
-                  <Button fx:id="btnSpeedMedium" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Medium" />
-                  <Button fx:id="btnSpeedFast" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Fast" />
-               </children>
-            </HBox>
-            <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Difficulty (Lives)" />
-                  <Button fx:id="btnDifficultyEasy" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Easy" />
-                  <Button fx:id="btnDifficultyMedium" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Medium" />
-                  <Button fx:id="btnDifficultyHard" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Hard" />
-               </children>
-            </HBox>
-            <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="UI Theme: " />
-                  <Button fx:id="btnThemeClassic" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Classic">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnThemeNeon" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Neon">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnThemePastel" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Pastel">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
+      <VBox layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="500.0" spacing="5.0">
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <padding>
-            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0"/>
          </padding>
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Settings"/>
+         <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Speed (BPM): "/>
+            <Button fx:id="btnSpeedSlow" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Slow"/>
+            <Button fx:id="btnSpeedMedium" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Medium"/>
+            <Button fx:id="btnSpeedFast" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Fast"/>
+         </HBox>
+         <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Difficulty (Lives)"/>
+            <Button fx:id="btnDifficultyEasy" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Easy"/>
+            <Button fx:id="btnDifficultyMedium" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Medium"/>
+            <Button fx:id="btnDifficultyHard" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Hard"/>
+         </HBox>
+         <HBox prefHeight="30.0" prefWidth="200.0" spacing="5.0" styleClass="grey-box">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="UI Theme: "/>
+            <Button fx:id="btnThemeClassic" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Classic">
+               <HBox.margin>
+                  <Insets left="5.0"/>
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnThemeNeon" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Neon">
+               <HBox.margin>
+                  <Insets left="5.0"/>
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnThemePastel" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Pastel">
+               <HBox.margin>
+                  <Insets left="5.0"/>
+               </HBox.margin>
+            </Button>
+         </HBox>
       </VBox>
-      <VBox layoutX="500.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" spacing="5.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Select a Song" />
-            <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
-               <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Vocalise No 1" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="F. Abt (1819–1885)" />
-                  <Button fx:id="btnStartSong3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
-               </children>
-            </VBox>
-            <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
-               <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="The Blue Alsatian Mountains" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="S. Adams (1844–1913)" />
-                  <Button fx:id="btnStartSong1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
-               </children>
-            </VBox>
-            <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
-               <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="When the Swallows Homeward Fly (Agathe)" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="F. Abt (1819–1885)" />
-                  <Button fx:id="btnStartSong2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#listenToButton" styleClass="normal-button" text="Start" />
-               </children>
-            </VBox>
-         </children>
+      <VBox layoutX="500.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" spacing="5.0">
          <padding>
-            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0"/>
          </padding>
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Select a Song"/>
+         <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg" text="Vocalise No 1"/>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg"
+                  text="F. Abt (1819–1885)"/>
+            <Button fx:id="btnStartSong3" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Start"/>
+         </VBox>
+         <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg"
+                  text="The Blue Alsatian Mountains"/>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg"
+                  text="S. Adams (1844–1913)"/>
+            <Button fx:id="btnStartSong1" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Start"/>
+         </VBox>
+         <VBox prefHeight="66.0" prefWidth="249.0" styleClass="purple-box">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg"
+                  text="When the Swallows Homeward Fly (Agathe)"/>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dark-bg"
+                  text="F. Abt (1819–1885)"/>
+            <Button fx:id="btnStartSong2" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                    onAction="#listenToButton" styleClass="normal-button" text="Start"/>
+         </VBox>
       </VBox>
    </children>
 </AnchorPane>

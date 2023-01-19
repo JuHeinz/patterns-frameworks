@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="600.0" styleClass="dark-bg" stylesheets="@../themes/classic-theme.css"
+      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="application.HighScoreManager">
+   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Highscores"/>
+   <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="50.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Player: "/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Score"/>
+   </HBox>
+   <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="50.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Player: "/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Score"/>
+   </HBox>
+   <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="50.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Player: "/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Score"/>
+   </HBox>
+   <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="50.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Player: "/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="standard-text" text="Score"/>
+   </HBox>
+   <Button mnemonicParsing="false" onAction="#switchToStartScene" styleClass="normal-button" text="Back to Main Menu"/>
+</VBox>

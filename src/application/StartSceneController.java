@@ -22,7 +22,7 @@ public class StartSceneController {
     private int lives;
     private int BPM;
 
-    public void listenToButton(ActionEvent event) throws IOException {
+    public void listenToButton(ActionEvent event) throws IOException, InterruptedException {
         Button pressedButton = (Button) event.getSource();
         String buttonId = pressedButton.getId();
         //If theme Button, switchTheme()
@@ -70,7 +70,7 @@ public class StartSceneController {
         scene.getStylesheets().add(theme);
 
         //Set the input handler
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        scene.setOnKeyPressed(new EventHandler<>() {
             public void handle(KeyEvent e) {
                 gameplaySceneController.handleKeyboard(e);
             }
