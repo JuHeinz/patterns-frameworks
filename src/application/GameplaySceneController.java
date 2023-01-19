@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
+import javafx.beans.property.SimpleLongProperty;
 
 
 public class GameplaySceneController {
@@ -39,7 +39,7 @@ public class GameplaySceneController {
     @FXML
     private Text P2PointsDisplay;
 
-    static AtomicReference<String> lastInput = new AtomicReference<>("");
+    static SimpleLongProperty observableTick = new SimpleLongProperty();
 
     /**
      * Displays information needed for start of game. Like songname + title.
@@ -81,10 +81,11 @@ public class GameplaySceneController {
         }
         P1noteFeedback.setText(noteFeedbackText);
         sharedLivesDisplay.setText(String.valueOf(lives));
-        lastInput.set(key);
     }
 
-
+    public void updateUI(long tick) {
+        System.out.println("tick " + tick); /* update UI here */ 
+    }
 
     public void startGame() {
 
@@ -99,7 +100,7 @@ public class GameplaySceneController {
         }
 
         //Instantiate and declare a new game and run it in its own thread
-        game = new PatternHeroGame(BPM, lives, midiFileName, lastInput);
+        game = new PatternHeroGame(BPM, lives, midiFileName, this);
         Thread gameLogicThread = new Thread(game);
         gameLogicThread.start();
     }

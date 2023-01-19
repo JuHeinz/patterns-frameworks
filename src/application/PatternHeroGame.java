@@ -2,18 +2,13 @@ package application;
 
 import music.PHSequencer;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 
 public class PatternHeroGame implements Runnable {
     public PHSequencer ph;
 
-    AtomicReference<String> lastInput;
-
-    public PatternHeroGame(int BPM, int lives, String midiFileName, AtomicReference<String> lastInput) {
+    public PatternHeroGame(int BPM, int lives, String midiFileName, GameplaySceneController parent) {
         // Get / Set game Settings
-        this.lastInput = lastInput;
-        ph = new PHSequencer(midiFileName, BPM, lastInput);
+        ph = new PHSequencer(midiFileName, BPM, parent);
     }
 
     /**

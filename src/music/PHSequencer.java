@@ -4,12 +4,13 @@ package music;
 import javax.sound.midi.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
+import application.GameplaySceneController;
 
 /**
  * Plays a song and outputs upcoming notes
  */
 public class PHSequencer {
+    private final GameplaySceneController parent;
     Sequencer sequencer;
     Sequence sequence;
     File song;
@@ -20,10 +21,10 @@ public class PHSequencer {
     public volatile String nextNote;
     public volatile long nextTick;
 
-    public PHSequencer(String fileName, int BPM, AtomicReference<String> lastInput) {
+    public PHSequencer(String fileName, int BPM, GameplaySceneController parent) {
         //Set up sequencer by getting corresponding Javax classes and methods
         try {
-
+            this.parent = parent;
             // The Sequencer is the class that plays the music
             this.sequencer = MidiSystem.getSequencer();
             // A sequence stores one or more tracks. Tracks are made up of MidiEvents
@@ -67,7 +68,6 @@ public class PHSequencer {
             while (sequencer.isRunning()) {
                 //Find current tick position of sequencer playback
                 sequencerTickPosition = sequencer.getTickPosition();
-                System.out.println("tick: " + sequencerTickPosition);
                 //If the tick of the sequencer is smaller than the currently anticipated note's tick, output upcoming tick.
                 if (sequencerTickPosition < noteOnEvents.get(i).getTick()) {
                     MidiEvent noteOnEvent = noteOnEvents.get(i);
@@ -83,6 +83,7 @@ public class PHSequencer {
                         i++;
                     }
                 }
+                parent.updateUI(sequencerTickPosition);
                 //Repeat after 100 ms
                 Thread.sleep(100);
             }
