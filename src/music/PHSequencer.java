@@ -96,7 +96,7 @@ public class PHSequencer {
             sequencer.close();
             System.out.println("Playback ended");
             parent.logHistory();
-
+            parent.stopGame();
         } catch (MidiUnavailableException | InterruptedException | IOException | InvalidMidiDataException e) {
             throw new RuntimeException(e);
         }

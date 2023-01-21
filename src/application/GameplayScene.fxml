@@ -13,23 +13,25 @@
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameplaySceneController">
-   <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1000.0" spacing="30.0" styleClass="dark-bg">
+   <Pane maxHeight="1.7976931348623157E308" minWidth="-Infinity" prefWidth="1000.0" styleClass="dark-bg">
       <padding>
-         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         <Insets bottom="5.0" left="5.0" right="5.0" top="10.0"/>
       </padding>
-      <Button fx:id="btnQuit" mnemonicParsing="false" onAction="#switchToScene" styleClass="normal-button" text="Quit" />
-      <Text fx:id="songLabel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Song Name - Interpret">
-         <HBox.margin>
-            <Insets />
-         </HBox.margin>
-      </Text>
-      <HBox alignment="CENTER_LEFT">
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="Lives: " />
-         <Text fx:id="sharedLivesDisplay" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="super-large" text=" " />
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" spacing="10.0">
+         <padding>
+            <Insets left="15.0" right="15.0" top="15.0"/>
+         </padding>
+         <Button mnemonicParsing="false" onAction="#switchToScene" styleClass="normal-button" text="Quit"/>
+         <Button fx:id="btnViewResults" mnemonicParsing="false" onAction="#switchToScene" styleClass="normal-button"
+                 text="Highscores" visible="false"/>
+         <Text fx:id="songLabel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline"
+               text="Song Name - Interpret"/>
       </HBox>
-      <Text fx:id="textGameOver" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline" text="GAME OVER!" visible="false" />
-      <Button fx:id="btnViewResults" mnemonicParsing="false" onAction="#switchToScene" styleClass="normal-button" text="View Results" visible="false" />
-   </HBox>
+      <HBox alignment="BASELINE_RIGHT" layoutX="900.0">
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="super-large" text="❤"/>
+         <Text fx:id="sharedLivesDisplay" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="super-large" text=" "/>
+      </HBox>
+   </Pane>
    <VBox alignment="CENTER" fillWidth="false" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" styleClass="dark-bg">
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" prefHeight="10.0">
          <opaqueInsets>
@@ -88,7 +90,7 @@
             <Rectangle fx:id="fNoteBlock" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="49.0" stroke="BLACK" strokeType="INSIDE" styleClass="note-block" width="117.0" />
          </Pane>
 
-      </GridPane>
+            </GridPane>
       <Text fx:id="P1noteFeedback" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="super-large" text=" " textAlignment="CENTER">
          <VBox.margin>
             <Insets top="5.0" />

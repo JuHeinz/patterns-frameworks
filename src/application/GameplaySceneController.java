@@ -44,8 +44,7 @@ public class GameplaySceneController {
     private Text P2PointsDisplay;
     @FXML
     private Button btnViewResults;
-    @FXML
-    private Text textGameOver;
+
     @FXML
     private Button aBtn;
     @FXML
@@ -97,7 +96,7 @@ public class GameplaySceneController {
      * Sets text in scene according to how well user hit note, updates live count. Gets called on key press or mouse click.
      */
     public void giveFeedback(String inputKey) {
-        if (!isOver){
+        if (!getIsOver()){
         long tick = game.ph.sequencerTickPosition;
 
         int player;
@@ -186,7 +185,7 @@ public class GameplaySceneController {
 
     String defaultStyle = "-fx-fill: #16161A;";
     String upNextStyle = "-fx-fill:white;";
-    String nowStyle = "-fx-background-color:;";
+    String nowStyle = "-fx-background:transparent;";
     String notNowStyle = "-fx-background-color: #16161A;";
 
 
@@ -202,10 +201,27 @@ public class GameplaySceneController {
         noteBlock2.setStyle(upNextStyle);
     }
     public void stopGame() {
-        game.ph.stopSequencer();
+        String overText = "";
+        String winner;
+        if (lives< 1){
+            overText="You both lost because you ran out of lives";
+            game.ph.stopSequencer();
+
+        }else if (lives > 1){
+            int p1Points = Integer.parseInt((P1PointsDisplay.getText()));
+            int p2Points = Integer.parseInt((P1PointsDisplay.getText()));
+            if (p1Points > p2Points){
+                 winner = "Player1";
+            }else if (p2Points == p1Points){
+                 winner = "Both";
+            }else {
+                 winner ="Player2";
+            }
+            overText= winner + " won!";
+        }
         // previously invisible button is shown
         btnViewResults.setVisible(true);
-        textGameOver.setVisible(true);
+        songLabel.setText(overText);
         setOver(true);
     }
 
@@ -270,7 +286,7 @@ public class GameplaySceneController {
 
         String fxmlFile;
         if (Objects.equals(buttonId, "btnViewResults")) {
-            fxmlFile = "GameOverScene.fxml";
+            fxmlFile = "HighScoreScene.fxml";
         } else {
             fxmlFile = "StartScene.fxml";
         }
@@ -310,7 +326,7 @@ public class GameplaySceneController {
     }
 
 
-    public boolean isOver() {
+    public boolean getIsOver() {
         return isOver;
     }
 
