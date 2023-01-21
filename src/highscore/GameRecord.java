@@ -1,4 +1,4 @@
-package application;
+package highscore;
 
 public class GameRecord {
 

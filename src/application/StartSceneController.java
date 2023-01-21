@@ -77,7 +77,7 @@ public class StartSceneController {
 
     public void switchToHighscoreScene(ActionEvent event) throws IOException {
         //Load Scene
-        Parent root = FXMLLoader.load(getClass().getResource("HighScoreScene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../highscore/HighScoreScene.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
 

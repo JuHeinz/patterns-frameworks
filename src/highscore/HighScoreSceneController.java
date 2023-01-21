@@ -1,4 +1,4 @@
-package application;
+package highscore;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,11 +13,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Math.round;
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
 
 
 public class HighScoreSceneController {
@@ -105,6 +110,17 @@ public class HighScoreSceneController {
     @FXML
     private void initialize() {
         displayInformation(p1Average, p2Average, p1Top5, p2Top5);
+    }
+
+    public void log(LocalDateTime date, String p1Points, String p2Points, String songName) throws IOException {
+        Files.write(Paths.get("history.csv"),
+                "%s;%s;%s;%s;%s".formatted(
+                        date,
+                        p1Points,
+                        p2Points,
+                        songName,
+                        System.lineSeparator()).getBytes(), APPEND, CREATE
+        );
     }
 
     private ArrayList<String> readCSV() {
@@ -227,7 +243,7 @@ public class HighScoreSceneController {
     public void switchToStartScene(ActionEvent event) throws IOException {
 
         //Load Scene
-        Parent root = FXMLLoader.load(getClass().getResource("StartScene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/application/StartScene.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
 

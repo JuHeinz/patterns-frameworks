@@ -1,5 +1,6 @@
 package application;
 
+import highscore.HighScoreSceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,72 +13,68 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
-
 
 public class GameplaySceneController {
-    private PatternHeroGame game;
-    private int lives;
-    private String midiFileName;
-    private int BPM;
+    String defaultStyle = "-fx-fill: #16161A;";
+    String upNextStyle = "-fx-fill:white;";
+    String nowStyle = "-fx-background:transparent;";
+    String notNowStyle = "-fx-background-color: #16161A;";
+     PatternHeroGame game;
+     int lives;
+     String midiFileName;
+     int BPM;
     @FXML
-    private Text P1noteFeedback;
+     Text P1noteFeedback;
     @FXML
-    private Text P2noteFeedback;
+     Text P2noteFeedback;
     @FXML
-    private Text songLabel;
+     Text songLabel;
     @FXML
-    private Text sharedLivesDisplay;
+     Text sharedLivesDisplay;
     @FXML
-    private Text P1PointsDisplay;
+     Text P1PointsDisplay;
     @FXML
-    private Text P2PointsDisplay;
+     Text P2PointsDisplay;
     @FXML
-    private Button btnViewResults;
-
+     Button btnViewResults;
     @FXML
-    private Button aBtn;
+     Button aBtn;
     @FXML
-    private Button sBtn;
+     Button sBtn;
     @FXML
-    private Button dBtn;
+     Button dBtn;
     @FXML
-    private Button fBtn;
+     Button fBtn;
     @FXML
-    private Button hBtn;
+     Button hBtn;
     @FXML
-    private Button jBtn;
+     Button jBtn;
     @FXML
-    private Button kBtn;
+     Button kBtn;
     @FXML
-    private Button lBtn;
+     Button lBtn;
     @FXML
-    private Rectangle aNoteBlock;
+     Rectangle aNoteBlock;
     @FXML
-    private Rectangle sNoteBlock;
+     Rectangle sNoteBlock;
     @FXML
-    private Rectangle dNoteBlock;
+     Rectangle dNoteBlock;
     @FXML
-    private Rectangle fNoteBlock;
+     Rectangle fNoteBlock;
     @FXML
-    private Rectangle hNoteBlock;
+     Rectangle hNoteBlock;
     @FXML
-    private Rectangle jNoteBlock;
+     Rectangle jNoteBlock;
     @FXML
-    private Rectangle kNoteBlock;
+     Rectangle kNoteBlock;
     @FXML
-    private Rectangle lNoteBlock;
-
+     Rectangle lNoteBlock;
     private boolean isOver;
 
     /**
@@ -96,65 +93,63 @@ public class GameplaySceneController {
      * Sets text in scene according to how well user hit note, updates live count. Gets called on key press or mouse click.
      */
     public void giveFeedback(String inputKey) {
-        if (!getIsOver()){
-        long tick = game.ph.sequencerTickPosition;
+        if (!getIsOver()) {
+            long tick = game.ph.sequencerTickPosition;
 
-        int player;
-        String key;
-        int notePointsAmount;
-        String noteFeedbackText;
+            int player;
+            String key;
+            int notePointsAmount;
+            String noteFeedbackText;
 
-        if ("HJKLhjkl".contains(inputKey)) {
-            player = 2;
-            key = Player.mapPlayerKey(inputKey);
-        } else {
-            player = 1;
-            key = inputKey;
-        }
-
-        String note = game.ph.nextNote;
-        if (key.equalsIgnoreCase(note)) {
-            long lag = game.ph.nextTick - tick;
-            if (Math.abs(lag) > 200) {
-                notePointsAmount = 1;
-                noteFeedbackText = "Bad";
-            } else if (Math.abs(lag) > 100) {
-                notePointsAmount = 10;
-                noteFeedbackText = "Okay";
+            if ("HJKLhjkl".contains(inputKey)) {
+                player = 2;
+                key = Player.mapPlayerKey(inputKey);
             } else {
-                notePointsAmount = 100;
-                noteFeedbackText = "PERFECT!";
+                player = 1;
+                key = inputKey;
             }
-            System.out.printf("Player %d score: %d (%s) %n", player, notePointsAmount, noteFeedbackText);
-        } else {
-            lives--;
-            notePointsAmount = 0;
-            noteFeedbackText = "FALSE!";
-        }
 
-        if (player == 1) {
-            P1noteFeedback.setText(noteFeedbackText);
-            P1PointsDisplay.setText(Integer.toString(Integer.parseInt(P1PointsDisplay.getText()) + notePointsAmount));
-        }
-        if (player == 2) {
-            P2noteFeedback.setText(noteFeedbackText);
-            P2PointsDisplay.setText(Integer.toString(Integer.parseInt(P2PointsDisplay.getText()) + notePointsAmount));
-        }
+            String note = game.ph.nextNote;
+            if (key.equalsIgnoreCase(note)) {
+                long lag = game.ph.nextTick - tick;
+                if (Math.abs(lag) > 200) {
+                    notePointsAmount = 1;
+                    noteFeedbackText = "Bad";
+                } else if (Math.abs(lag) > 100) {
+                    notePointsAmount = 10;
+                    noteFeedbackText = "Okay";
+                } else {
+                    notePointsAmount = 100;
+                    noteFeedbackText = "PERFECT!";
+                }
+                System.out.printf("Player %d score: %d (%s) %n", player, notePointsAmount, noteFeedbackText);
+            } else {
+                lives--;
+                notePointsAmount = 0;
+                noteFeedbackText = "FALSE!";
+            }
 
-        sharedLivesDisplay.setText(String.valueOf(lives));
+            if (player == 1) {
+                P1noteFeedback.setText(noteFeedbackText);
+                P1PointsDisplay.setText(Integer.toString(Integer.parseInt(P1PointsDisplay.getText()) + notePointsAmount));
+            }
+            if (player == 2) {
+                P2noteFeedback.setText(noteFeedbackText);
+                P2PointsDisplay.setText(Integer.toString(Integer.parseInt(P2PointsDisplay.getText()) + notePointsAmount));
+            }
 
-        if (lives <= 0) {
-            stopGame();
-        }
+            sharedLivesDisplay.setText(String.valueOf(lives));
+
+            if (lives <= 0) {
+                stopGame();
+            }
         }
     }
 
-
-
     //this gets called from the sequencer every 100ms
     public void updateUI(long sequencerTickPosition, String nextNote, long nextTick) {
-        List<Button> allButtons = Arrays.asList(aBtn, sBtn,dBtn,fBtn,hBtn,jBtn,kBtn,lBtn);
-        List<Rectangle> allRectangles = Arrays.asList(aNoteBlock, sNoteBlock,dNoteBlock,fNoteBlock,hNoteBlock,jNoteBlock,kNoteBlock,lNoteBlock);
+        List<Button> allButtons = Arrays.asList(aBtn, sBtn, dBtn, fBtn, hBtn, jBtn, kBtn, lBtn);
+        List<Rectangle> allRectangles = Arrays.asList(aNoteBlock, sNoteBlock, dNoteBlock, fNoteBlock, hNoteBlock, jNoteBlock, kNoteBlock, lNoteBlock);
 
         //Avoid throwing an error on the first note
         if (nextNote == null) {
@@ -164,60 +159,55 @@ public class GameplaySceneController {
         long distance = calculateRelativeDistance(nextTick, sequencerTickPosition);
 
         //Reset styles
-        for (Rectangle r : allRectangles){
+        for (Rectangle r : allRectangles) {
             r.setStyle(defaultStyle);
         }
 
-        for (Button b : allButtons){
+        for (Button b : allButtons) {
             b.setStyle(notNowStyle);
         }
 
         //set style for upcoming blocks and buttons
         switch (nextNote) {
-            case "A" -> setStyles(aNoteBlock,hNoteBlock,aBtn,hBtn,distance);
-            case "S" -> setStyles(sNoteBlock,jNoteBlock,sBtn,jBtn,distance);
-            case "D" -> setStyles(dNoteBlock,kNoteBlock,dBtn,kBtn,distance);
-            case "F" -> setStyles(fNoteBlock,lNoteBlock,fBtn,lBtn,distance);
+            case "A" -> setStyles(aNoteBlock, hNoteBlock, aBtn, hBtn, distance);
+            case "S" -> setStyles(sNoteBlock, jNoteBlock, sBtn, jBtn, distance);
+            case "D" -> setStyles(dNoteBlock, kNoteBlock, dBtn, kBtn, distance);
+            case "F" -> setStyles(fNoteBlock, lNoteBlock, fBtn, lBtn, distance);
         }
 
 
     }
 
-    String defaultStyle = "-fx-fill: #16161A;";
-    String upNextStyle = "-fx-fill:white;";
-    String nowStyle = "-fx-background:transparent;";
-    String notNowStyle = "-fx-background-color: #16161A;";
-
-
-    public void setStyles(Rectangle noteBlock1,Rectangle noteBlock2, Button b1, Button b2, long distance ){
-        if (distance <= 50){
+    public void setStyles(Rectangle noteBlock1, Rectangle noteBlock2, Button b1, Button b2, long distance) {
+        if (distance <= 50) {
             b1.setStyle(nowStyle);
             b2.setStyle(nowStyle);
-        }else {
+        } else {
             b1.setStyle(notNowStyle);
             b2.setStyle(notNowStyle);
         }
         noteBlock1.setStyle(upNextStyle);
         noteBlock2.setStyle(upNextStyle);
     }
+
     public void stopGame() {
         String overText = "";
         String winner;
-        if (lives< 1){
-            overText="You both lost because you ran out of lives";
+        if (lives < 1) {
+            overText = "You both lost because you ran out of lives";
             game.ph.stopSequencer();
 
-        }else if (lives > 1){
+        } else if (lives > 1) {
             int p1Points = Integer.parseInt((P1PointsDisplay.getText()));
-            int p2Points = Integer.parseInt((P1PointsDisplay.getText()));
-            if (p1Points > p2Points){
-                 winner = "Player1";
-            }else if (p2Points == p1Points){
-                 winner = "Both";
-            }else {
-                 winner ="Player2";
+            int p2Points = Integer.parseInt((P2PointsDisplay.getText()));
+            if (p1Points > p2Points) {
+                winner = "Player1";
+            } else if (p1Points == p2Points) {
+                winner = "Both ";
+            } else {
+                winner = "Player2";
             }
-            overText= winner + " won!";
+            overText = winner + " won!";
         }
         // previously invisible button is shown
         btnViewResults.setVisible(true);
@@ -263,14 +253,8 @@ public class GameplaySceneController {
 
 
     public void logHistory() throws IOException {
-        Files.write(Paths.get("history.csv"),
-                "%s;%s;%s;%s;%s".formatted(
-                        LocalDateTime.now(),
-                        P1PointsDisplay.getText(),
-                        P2PointsDisplay.getText(),
-                        game.ph.getFileName(),
-                System.lineSeparator()).getBytes(), APPEND, CREATE
-        );
+        HighScoreSceneController hsc = new HighScoreSceneController();
+        hsc.log(LocalDateTime.now(), P1PointsDisplay.getText(), P2PointsDisplay.getText(), game.ph.getFileName());
     }
 
 
@@ -286,7 +270,7 @@ public class GameplaySceneController {
 
         String fxmlFile;
         if (Objects.equals(buttonId, "btnViewResults")) {
-            fxmlFile = "HighScoreScene.fxml";
+            fxmlFile = "/highscore/HighScoreScene.fxml";
         } else {
             fxmlFile = "StartScene.fxml";
         }

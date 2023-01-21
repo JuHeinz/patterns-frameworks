@@ -8,12 +8,9 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-	
-
-
 
 	/**
-	 * start() Method is inherited from JavaFX Application class
+	 * start() Method is inherited from JavaFX Application class. Starts the first scene of game.
 	 */
 	@Override
 	public void start(Stage primaryStage) {
